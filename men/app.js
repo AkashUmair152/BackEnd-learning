@@ -2,6 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 
 const app = express();
+const connection = require("./config/db");
+
+const userModel = require("./models/user");
 
 app.use(express.static("public"));
 
@@ -17,36 +20,61 @@ app.use(morgan("dev"));
 // render html
 app.set("view engine", "ejs");
 
-// creating middleware
+// // form hadlling with express
 
-app.use("/", (req, res, next) => {
-  console.log("this is middleware");
+// app.post("/get-data", (req, res) => {
+//   console.log(req.body);
+//   res.send("data received ");
+// });
 
-  //   res.send("this is middleware");
-
-  return next();
-});
+// user registeration route
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("register");
 });
 
-// creting a routes using express
+// create a user from front from to the backend database
+app.post("/register", async (req, res) => {
+  const { username, email, password } = req.body;
 
-app.get("/about", (req, res) => {
-  res.send("This is about page");
+  const newUser = await userModel.create({
+    username: username,
+    email: email,
+    password: password,
+  });
+
+  res.send(newUser);
 });
 
-// rendering html with ejs
-app.get("/profile", (req, res) => {
-  res.render("this is profile page");
+// find/read method
+
+app.get("/all-user", (req, res) => {
+  userModel.find().then((users) => {
+    res.send(users);
+  });
 });
 
-// form hadlling with express
+// update method
 
-app.post("/get-data", (req, res) => {
-  console.log(req.body);
-  res.send("data received ");
+app.get("/update", async (req, res) => {
+  await userModel.findOneAndUpdate(
+    {
+      username: "akash",
+    },
+    {
+      email: "akash@123.com",
+    }
+  );
+  res.send("user updated");
+});
+
+// delete method
+
+app.get("/delete", async (req, res) => {
+  await userModel.findOneAndDelete({
+    username: "aaaaaa",
+  });
+  res.send("user deleted");
 });
 
 // defining server

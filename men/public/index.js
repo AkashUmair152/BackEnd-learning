@@ -1,1 +1,1 @@
-alert("hello i am javascript");
+// alert("hello i am javascript");
