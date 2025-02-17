@@ -1,87 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <title>Home</title>
 </head>
+<body>
 
-<body class="transition duration-500">
+    <h1 style="text-align: center;" >Home</h1>
+    <p style="text-align: center;">Lorem ipsum, dolor sit amet consectetur adipisicing elit. In qui enim, consectetur doloremque accusantium exercitationem ipsum non necessitatibus corrupti voluptas dolorem magnam totam ducimus, nemo quas corporis sunt voluptates nisi quaerat quis natus. Iste temporibus recusandae ad consequuntur accusamus accusantium ratione exercitationem quasi, porro tempore assumenda esse quisquam culpa perferendis doloremque illo adipisci rerum. Architecto laboriosam vel odio omnis obcaecati dolorum commodi, nemo eveniet molestias odit nam, fugit blanditiis, quisquam porro quasi tempore eos! Perferendis accusantium sapiente laborum aspernatur officiis. Quaerat ad veritatis, quisquam veniam deserunt provident! Sequi maxime sit, iusto placeat provident distinctio, perferendis molestias rem quaerat, autem dignissimos.</p>
+   <div style="display: flex; justify-content: space-between; width: 50%; margin: auto; text-align: center;">
+    <a style="text-align: center; padding: 10px 25px; background-color: #28a745; color: #fff; text-decoration: none;" href="/about">About</a>
+    <a style="text-align: center ; padding: 10px 25px; background-color: #28a745; color: #fff; text-decoration: none;" href="/form">Form</a>
 
-    <!-- Dark Mode Toggle Button -->
-    <div class="flex justify-end p-4">
-        <button onclick="toggleDarkMode()" id="theme-toggle"
-            class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-            Toggle Dark Mode
-        </button>
-    </div>
-
-    <main class="btn p-4">
-        <!-- Upload File Button -->
-        <button onclick="showPopUp(event)" type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-            Upload File
-        </button>
-
-        <!-- Pop-up Div -->
-        <div class="pop hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div onclick="event.stopPropagation()" class="bg-white p-6 rounded shadow-lg dark:bg-gray-800">
-                <form action="/upload" method="post" class="flex flex-col gap-6">
-                    <div class="flex items-center justify-center w-full">
-                        <label for="dropzone-file"
-                            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                                </svg>
-                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
-                                        class="font-semibold">Click
-                                        to upload</span> or drag and drop</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
-                                    800x400px)
-                                </p>
-                            </div>
-                            <input id="dropzone-file" type="file" name="file" class="hidden" />
-                        </label>
-                    </div>
-                    <button type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                        Upload File
-                    </button>
-                </form>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        // Function to toggle dark mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-        }
-
-        function showPopUp(event) {
-            event.stopPropagation();  // Stop the click event from propagating
-            document.querySelector('.pop').classList.remove('hidden');
-            document.querySelector('.pop').style.display = "flex";
-        }
-
-        function hidePopUp() {
-            document.querySelector('.pop').classList.add('hidden');
-            document.querySelector('.pop').style.display = "none";
-        }
-
-        // Hide pop-up if clicked outside
-        document.addEventListener('click', function () {
-            hidePopUp();
-        });
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+   </div>
+    
 </body>
-
 </html>

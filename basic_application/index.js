@@ -9,6 +9,9 @@ app.get("/", (req, res) => {
 app.get("/user", (req, res) => {
   res.send("this is a User of Backend ");
 });
+app.get("/profile", (req, res) => {
+  res.send("This is Profile Page of a User");
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
