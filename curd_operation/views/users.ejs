@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Users</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Top Section -->
+  <section class="bg-black text-white py-10">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col items-center justify-center space-y-4">
+      <h1 class="text-4xl font-bold text-center">All Users</h1>
+      <a href="/add" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-md transition duration-300">
+        Add New User
+      </a>
+    </div>
+  </section>
+
+  <!-- Cards Section -->
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <% users.forEach(user => { %>
+          <div class="bg-gray-800 text-white p-6 rounded-lg shadow-lg flex flex-col items-center space-y-4">
+            <!-- Name -->
+            <strong class="text-xl font-bold text-center"><%= user.name %></strong>
+            <!-- Profile Image -->
+            <img src="/uploads/<%= user.image %>" alt="<%= user.name %>" class="w-24 h-24 rounded-full object-cover border-2 border-blue-500">
+            <!-- Username -->
+            <p class="text-sm text-gray-400 text-center">@<%= user.username %></p>
+            <!-- Email -->
+            <p class="text-sm text-gray-300 text-center"><%= user.email %></p>
+            <!-- Actions -->
+            <div class="flex space-x-2">
+              <a href="/edit/<%= user._id %>" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-1 px-3 rounded-md transition duration-300">
+                Edit
+              </a>
+              <a href="/delete/<%= user._id %>" onclick="return confirm('Are you sure?')" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded-md transition duration-300">
+                Delete
+              </a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
