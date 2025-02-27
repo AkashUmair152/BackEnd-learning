@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4 text-gray-800 font-sans leading-normal tracking-normal w-full">
+  <!-- Full Width and Height Container -->
+  <div class="w-full h-full bg-white rounded-lg shadow-lg overflow-y-auto p-8">
+    <!-- Welcome Message -->
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+      Welcome, <%= userName %>!
+    </h1>
+
+    <!-- Create Post Section -->
+    <form action="/create-post" method="POST" class="mb-6">
+      <textarea
+        name="content"
+        placeholder="Write your post here..."
+        required
+        class="w-full px-4 py-2 border rounded resize-none h-24 mb-4"
+      ></textarea>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full">
+        Create Post
+      </button>
+    </form>
+
+    <!-- Display Posts in a 4-Column Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+      <% if (posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+          <div class="bg-gray-200 p-4 rounded-lg">
+            <p class="text-gray-800"><%= post.content %></p>
+            <small class="text-gray-500 block mt-2">Posted on <%= new Date(post.date).toLocaleString() %></small>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="text-gray-600 col-span-full text-center">No posts yet. Start sharing your thoughts!</p>
+      <% } %>
+    </div>
+
+    <!-- Logout Button -->
+    <form action="/logout" method="GET" class="mt-6">
+      <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full">
+        Logout
+      </button>
+    </form>
+  </div>
+</body>
+</html>
