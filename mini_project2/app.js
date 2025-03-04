@@ -4,28 +4,48 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+const multer = require('multer');
+
+// Import Models
 const userModel = require('./models/user'); // Assuming you have a user model
 const postModel = require('./models/post'); // Assuming you have a post model
 
-// Set EJS as the templating engine
-app.set('view engine', 'ejs');
+// Configure Multer for File Uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads/'); // Store uploaded files in the `public/uploads` folder
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        cb(null, uniqueSuffix + path.extname(file.originalname)); // Generate a unique filename
+    },
+});
+
+const upload = multer({ storage: storage }); // Define the upload middleware
 
 // Middleware
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public'))); // Serve static files
+app.use(express.urlencoded({ extended: false })); // Parse URL-encoded data
+app.use(cookieParser()); // Parse cookies
+
+// Set EJS as the Templating Engine
+app.set('view engine', 'ejs');
+
+// Connect to MongoDB
+mongoose.connect('mongodb://127.0.0.1:27017/miniproject2')
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
 app.get('/', (req, res) => {
     res.render('index');
 });
 
-// Register Page
 app.get('/register', (req, res) => {
     res.render('register');
 });
 
-// Handle User Registration
 app.post('/register', async (req, res) => {
     const { username, name, email, password, age } = req.body;
 
@@ -60,12 +80,10 @@ app.post('/register', async (req, res) => {
     });
 });
 
-// Login Page
 app.get('/login', (req, res) => {
     res.render('login');
 });
 
-// Handle User Login
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -84,7 +102,6 @@ app.post('/login', async (req, res) => {
     res.redirect('/profile'); // Redirect to profile after login
 });
 
-// Logout Route
 app.get('/logout', (req, res) => {
     res.clearCookie('token'); // Clear the JWT token cookie
     res.redirect('/'); // Redirect to the homepage
@@ -107,20 +124,22 @@ app.get('/profile', verifyToken, async (req, res) => {
 });
 
 // Create Post Route
-app.post('/create-post', verifyToken, async (req, res) => {
+app.post('/create-post', verifyToken, upload.single('image'), async (req, res) => {
     const { content } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; // Get the image URL if a file was uploaded
 
     try {
         const newPost = new postModel({
-            user: req.user.id, // Use `user` to match the schema
+            user: req.user.id,
             content,
+            image: imageUrl, // Save the image URL in the database
         });
 
         await newPost.save(); // Save the post to the database
 
         // Add the post ID to the user's `post` array
         const user = await userModel.findById(req.user.id);
-        user.post.push(newPost._id); // Add the post reference to the user's `post` array
+        user.post.push(newPost._id);
         await user.save();
 
         res.redirect('/profile'); // Redirect back to the profile page
