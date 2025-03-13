@@ -12,10 +12,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// database connection here 
+const connectDB = require('./config/mongoose-connecetion');
+connectDB();
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-}); 
+// handling routes here 
+const productRouter = require('./routes/productRouter');
+const ownerRouter = require('./routes/ownerRouter');
+const userRouter = require('./routes/userRouter');
+
+app.use('/product', productRouter);
+app.use('/owner', ownerRouter);
+app.use('/users', userRouter);
+
+
+app.get('/', (req, res) => {
+    res.send(' Welcome to the Home Page ');
+});
+
 
 app.listen(3000, () => {
     console.log(`Example app listening on port ${port}`);

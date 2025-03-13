@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 // Define the User Schema
-const userSchema = new mongoose.Schema({
+const ownerSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: true,
@@ -20,33 +20,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
   },
-  cart: [
-    {
-      productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product', // Reference to the Product model
-      },
-      quantity: {
-        type: Number,
-        default: 1,
-      },
-    },
-  ],
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
+ 
   orders: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Order', // Assuming you have an Order model
     },
   ],
-  contactNumber: {
-    type: String,
-    required: true,
-    trim: true,
-  },
   picture: {
     type: String, // URL or path to the image
     default: '', // Default value if no picture is uploaded
@@ -54,6 +34,6 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true }); // Add createdAt and updatedAt fields
 
 // Create the User Model
-const UserModel = mongoose.model('User', userSchema);
+const ownerModel = mongoose.model('owner', ownerSchema);
 
-module.exports = UserModel;
+module.exports = ownerModel;
