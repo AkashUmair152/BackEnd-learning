@@ -20,10 +20,12 @@ connectDB();
 const productRouter = require('./routes/productRouter');
 const ownerRouter = require('./routes/ownerRouter');
 const userRouter = require('./routes/userRouter');
+const { env } = require("process");
 
 app.use('/product', productRouter);
 app.use('/owner', ownerRouter);
 app.use('/users', userRouter);
+
 
 
 app.get('/', (req, res) => {

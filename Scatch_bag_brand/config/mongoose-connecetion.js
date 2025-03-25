@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
+const config = require('config');
+
+const debug = require('debug')('development:mongoose');
+
 
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/scatch_bag_brand', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('MongoDB connected successfully');
+        debug('Attempting to connect to MongoDB...');
+        await mongoose.connect(`${config.get("MONGODB_URI")}/scatch`);
+        debug('MongoDB connected successfully');
     } catch (err) {
-        console.error('MongoDB connection error:', err.message);
+        debug('MongoDB connection error:', err.message);
         process.exit(1);
     }
 };
